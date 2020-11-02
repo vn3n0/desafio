@@ -4,10 +4,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.net.UnknownHostException;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import static org.hamcrest.CoreMatchers.*;
 
-import org.junit.Before;
-import org.junit.Test;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
@@ -35,13 +36,13 @@ public class ProductServiceTest {
 		assertThat(collection, is(notNullValue()));
 	}
 
-	@Test(expected = Exception.class)
+	@Test
 	public void shouldNotBeAbleToUseMongoClientAfterItHasBeenClosed() throws UnknownHostException {
 		MongoClient mongoClient = new MongoClient();
 		mongoClient.getDB("products").getCollection("promotions").insert(new BasicDBObject("field", "value"));
 	}
 
-	@Before
+	@BeforeEach
 	public void setUp() throws UnknownHostException {
 		/*
 		 * MongoClient mongoClient = new MongoClient(new
